@@ -11,11 +11,11 @@ based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg
 	- Sorts Chars per average iLevel, from high to low geared 
 
 # How it looks
-Default look of the Tooltip
-![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)
-Options Menu to change parts to your liking
-![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)
-Lockouts with remaining time and changed Tooltip
+Default look of the Tooltip<br>
+![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)<br>
+Options Menu to change parts to your liking<br>
+![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)<br>
+Lockouts with remaining time and changed Tooltip<br>
 ![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
 
 ## Changes
