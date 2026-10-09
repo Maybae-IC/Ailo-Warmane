@@ -19,6 +19,9 @@ Lockouts with remaining time and changed Tooltip<br>
 ![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
 
 ## Changes
+- 1.3.0 Hotfix
+	- Ignore invalid saved values for Timestamps
+
 - 1.3.0   
 	- Reworked Raid Weekly Quest logic to work on Warmane
 	- Added new options to name some parts in the tooltip to your liking

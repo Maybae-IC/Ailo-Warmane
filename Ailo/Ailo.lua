@@ -623,7 +623,7 @@ function Ailo:PrepareTooltip(tooltip)
                         tooltip:SetCell(lastline, i, "") 
                         tooltip:SetCellColor(lastline, i, self.db.profile.freeraid.r, self.db.profile.freeraid.g, self.db.profile.freeraid.b, self.db.profile.freeraid.a)
                     end
-                    if dailyHeroicColum and instances.dailyheroic then
+                    if dailyHeroicColum and type(instances.dailyheroic) == "number" then
 						local expire_text = ""
 						local remaining = instances.dailyheroic - tnow
 						if remaining >= 3600 then
@@ -636,7 +636,7 @@ function Ailo:PrepareTooltip(tooltip)
 						tooltip:SetCell(lastline, dailyHeroicColum, expire_text) -- change
                         tooltip:SetCellColor(lastline, dailyHeroicColum, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
                     end
-                    if seasonDailyColumn and instances.dailyseason then
+                    if seasonDailyColumn and type(instances.dailyseason) == "number" then
 						local expire_text = ""
 						local remaining = instances.dailyseason - tnow
 						if remaining >= 3600 then
@@ -649,7 +649,7 @@ function Ailo:PrepareTooltip(tooltip)
 						tooltip:SetCell(lastline, seasonDailyColumn, expire_text) -- change
                         tooltip:SetCellColor(lastline, seasonDailyColumn, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
                     end
-                    if weeklyRaidColumn and instances.weeklydone then
+                    if weeklyRaidColumn and type(instances.weeklydone) == "number" then
 						local expire_text = ""
 						local remaining = instances.weeklydone - tnow
 						if remaining >= 24 * 3600 then
@@ -678,7 +678,7 @@ function Ailo:PrepareTooltip(tooltip)
 						tooltip:SetCell(lastline, dailyPVPColumn, expire_text) -- change
                         tooltip:SetCellColor(lastline, dailyPVPColumn, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
                     end
-                    if wgVictoryColumn and instances.wgvictory then
+                    if wgVictoryColumn and type(instances.wgvictory) == "number" then
 						local expire_text = ""
 						local remaining = instances.wgvictory - tnow
 						if remaining >= 24 * 3600 then
@@ -785,17 +785,18 @@ function Ailo:GetNextPurge()
                     end
                 end
             end
-            if instances.dailyheroic and ( nextPurge == 0 or nextPurge > (instances.dailyheroic) ) then 
+            -- Ignore invalid saved values; these fields must contain timestamps.
+            if type(instances.dailyheroic) == "number" and (nextPurge == 0 or nextPurge > instances.dailyheroic) then
                 nextPurge = instances.dailyheroic
             end
-            if instances.dailyseason and ( nextPurge == 0 or nextPurge > (instances.dailyseason) ) then 
+            if type(instances.dailyseason) == "number" and (nextPurge == 0 or nextPurge > instances.dailyseason) then
                 nextPurge = instances.dailyseason
             end
-            if instances.weeklydone and ( nextPurge == 0 or nextPurge > (instances.weeklydone) ) then 
+            if type(instances.weeklydone) == "number" and (nextPurge == 0 or nextPurge > instances.weeklydone) then
                 nextPurge = instances.weeklydone
             end
-            if instances.wgvictory and ( nextPurge == 0 or nextPurge > (instances.wgvictory) ) then 
-                nextPurge = instances.wgvictory	
+            if type(instances.wgvictory) == "number" and (nextPurge == 0 or nextPurge > instances.wgvictory) then
+                nextPurge = instances.wgvictory
             end
         end
     end
@@ -955,17 +956,19 @@ function Ailo:CheckDailyHeroicLockouts()
     local now = time()
     for iterateRealm, _ in pairs(charsdb) do
         for iteratePlayer, instances in pairs(charsdb[iterateRealm]) do 
-            if instances.dailyheroic and now > instances.dailyheroic then
-                self.db.global.chars[iterateRealm][iteratePlayer].dailyheroic = nil
+            -- These fields are expiration timestamps. Remove invalid saved values
+            -- instead of comparing booleans or other unexpected types with numbers.
+            if type(instances.dailyheroic) ~= "number" or now > instances.dailyheroic then
+                instances.dailyheroic = nil
             end
-            if instances.dailyseason and now > instances.dailyseason then
-                self.db.global.chars[iterateRealm][iteratePlayer].dailyseason = nil
+            if type(instances.dailyseason) ~= "number" or now > instances.dailyseason then
+                instances.dailyseason = nil
             end
-            if instances.weeklydone and now > instances.weeklydone then
-                self.db.global.chars[iterateRealm][iteratePlayer].weeklydone = nil
+            if type(instances.weeklydone) ~= "number" or now > instances.weeklydone then
+                instances.weeklydone = nil
             end
-            if instances.wgvictory and now > instances.wgvictory then
-                self.db.global.chars[iterateRealm][iteratePlayer].wgvictory = nil
+            if type(instances.wgvictory) ~= "number" or now > instances.wgvictory then
+                instances.wgvictory = nil
             end
         end
     end
