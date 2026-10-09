@@ -10,16 +10,13 @@ based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg
 	- Shows remaining lockout time in days > hours > minutes
 	- Sorts Chars per average iLevel, from high to low geared 
 
-## How it looks
-	Default look of the Tooltip
-	![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)
-
-	Options Menu to change parts to your liking
-	![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)
-
-	Lockouts with remaining time and changed Tooltip
-	![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
-
+# How it looks
+Default look of the Tooltip
+![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)
+Options Menu to change parts to your liking
+![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)
+Lockouts with remaining time and changed Tooltip
+![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
 
 ## Changes
 - 1.3.0   
