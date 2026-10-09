@@ -41,7 +41,20 @@ L["Updating data for current player."] = "Updating data for current player." -- 
 L["Use !ClassColors"] = "Use !ClassColors" -- Requires localization
 L["Use !ClassColors addon for class colors used to color the names in the tooltip"] = "Use !ClassColors addon for class colors used to color the names in the tooltip" -- Requires localization
 L["Wipe Database"] = "Wipe Database" -- Requires localization
-
 L["Track 'Event boss'"] = true -- Requires localization
 L["TRACK_DAILY_EVENT_BOSS_DESC"] = "During a World Event, show a column in the tooltip indicating if a character has done the 'Event Boss instance'" -- Requires localization
-
+L["days"] = "d" -- Requires Localization
+L["hours"] = "h" -- Requires Localization
+L["minutes"] = "m" -- Requires Localization
+L["Raid ICC"] = "Icecrown Citadel" -- Requires Localization
+L["Tooltip abbreviation used for dynamic raids"] = true -- Requires Localization
+L["Tooltip abbreviations for Daily Seasonal and Heroic"] = true -- Requires Localization
+L["Daily"] = true -- Requires Localization
+L["Seasonal Event"] = true -- Requires Localization
+L["Heroic"] = true -- Requires Localization
+L["Tooltip abbreviations for Weekly Raid Quest"] = true -- Requires Localization
+L["Weekly"] = true -- Requires Localization
+L["Raid Quest"] = true -- Requires Localization
+L["Tooltip abbreviations for PvP Daily and Weekly"] = true -- Requires Localization
+L["PvP Daily"] = true -- Requires Localization
+L["PvP Weekly"] = true -- Requires Localization

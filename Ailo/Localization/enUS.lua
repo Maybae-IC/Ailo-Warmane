@@ -42,9 +42,22 @@ L["Updating data for current player."] = true
 L["Use !ClassColors"] = true
 L["Use !ClassColors addon for class colors used to color the names in the tooltip"] = true
 L["Wipe Database"] = true
-
 L["Track 'Event boss'"] = true
 L["TRACK_DAILY_EVENT_BOSS_DESC"] = "During a World Event, show a column in the tooltip indicating if a character has done the 'Event Boss instance'"
-
 L["showOnlyWrathRaids"] = "Show only WotLK Raids"
 L["showOnlyWrathRaids_DESC"] = "Will show only the WotLK raids and ignore other saved instances"
+L["days"] = "d"
+L["hours"] = "h"
+L["minutes"] = "m"
+L["Raid ICC"] = "Icecrown Citadel"
+L["Tooltip abbreviation used for dynamic raids"] = true
+L["Tooltip abbreviations for Daily Seasonal and Heroic"] = true
+L["Daily"] = true
+L["Seasonal Event"] = true
+L["Heroic"] = true
+L["Tooltip abbreviations for Weekly Raid Quest"] = true
+L["Weekly"] = true
+L["Raid Quest"] = true
+L["Tooltip abbreviations for PvP Daily and Weekly"] = true
+L["PvP Daily"] = true
+L["PvP Weekly"] = true

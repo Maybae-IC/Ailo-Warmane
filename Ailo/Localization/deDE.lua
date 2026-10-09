@@ -41,9 +41,22 @@ L["Updating data for current player."] = "Aktualisierung der Daten für aktuelle
 L["Use !ClassColors"] = "Klassenfarben verwenden"
 L["Use !ClassColors addon for class colors used to color the names in the tooltip"] = "!ClassColors-Addon für Klassenfarben im Tooltip verwenden"
 L["Wipe Database"] = "Datenbank löschen"
-
 L["Track 'Event boss'"] = "Zeige 'Event Boss'"
 L["TRACK_DAILY_EVENT_BOSS_DESC"] = "Während einem World Event, zeige ob der Charakter die 'Event Boss' Daily heute abgeschlossen hat"
-
 L["showOnlyWrathRaids"] = "Zeige nur WotLK Raids"
 L["showOnlyWrathRaids_DESC"] = "Es werden ausschließlich WotLK Schlachtzüge angezeigt und die restlichen Schlachtzug-IDs werden ignoriert"
+L["days"] = "t"
+L["hours"] = "h"
+L["minutes"] = "m"
+L["Raid ICC"] = "Eiskronenzitadelle"
+L["Tooltip abbreviation used for dynamic raids"] = "Abkürzung für \"dynamische\" Schlachtzüge im Tooltip"
+L["Tooltip abbreviations for Daily Seasonal and Heroic"] = "Abkürzung für \"daily\" Event Boss und heroische Dungeons im Tooltip"
+L["Daily"] = true
+L["Seasonal Event"] = "Event Boss"
+L["Heroic"] = true
+L["Tooltip abbreviations for Weekly Raid Quest"] = "Abkürzung für \"Weekly\" Schlachtzug Quest im Tooltip"
+L["Weekly"] = true
+L["Raid Quest"] = true
+L["Tooltip abbreviations for PvP Daily and Weekly"] = "Abkürzung für \"daily und weekly\" PvP im Tooltip"
+L["PvP Daily"] = true 
+L["PvP Weekly"] = true 
