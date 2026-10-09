@@ -11,17 +11,17 @@ based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg
 	- Sorts Chars per average iLevel, from high to low geared 
 
 # How it looks
-Default look of the Tooltip<br>
-![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)<br>
-Options Menu to change parts to your liking<br>
-![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)<br>
-Lockouts with remaining time and changed Tooltip<br>
+Default look of the Tooltip:<br>
+![Default Tooltip](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/default.png)<br><br>
+Options Menu to change parts to your liking:<br>
+![Options Menu](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/options.png)<br><br>
+Lockouts with remaining time and changed Tooltip:<br>
 ![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
 
 ## Changes
 - 1.3.0   
 	- Reworked Raid Weekly Quest logic to work on Warmane
-	- Added new options to name some parts in the tooltip to your liking
-	- Changed logic to make Icecrown Citadel to show as dyn instead of nhc
-	- Reworked raimining Lockout time to show days > hours > minutes 
+	- Added new options to name some parts in the Tooltip to your liking
+	- Changed logic to let Icecrown Citadel show as dyn instead of nhc
+	- Reworked remaining Lockout time to show days > hours > minutes 
 	- Code cleanup
