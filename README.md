@@ -1,5 +1,5 @@
 # Ailo-Warmane
-Warmane Version of the WotLK addon "Am I Locked Out" 
+Warmane Version of the WotLK addon "Am I Locked Out"
 based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg/wow-Ailo-enhanced)
 
 ## Features
@@ -17,7 +17,7 @@ based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg
 ## Changes
 - 1.3.0   
 	- Reworked Raid Weekly Quest logic to work on Warmane
-	- Added options to change abbreviations for the Daily and Weekly 
-	  in Tooltip to your liking e.g. "2" and "x" to "Daily" "HC", etc.
+	- Added options to change abbreviations for the Daily and Weekly
+      in Tooltip to your liking e.g. "2" and "x" to "Daily" "HC", etc.
 	- Reworked raimining Lockout time to show days > hours > minutes 
 	- Code cleanup
