@@ -3,7 +3,7 @@ Warmane Version of the WotLK addon "Am I Locked Out"<br>
 based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg/wow-Ailo-enhanced)
 
 ## Features
-	- Track and display all Raid IDs
+	- Track and display all Raid IDs and Dungeon lockouts
 	- Track and display Raid Weekly Quest (... Must Die!)
 	- Track and display Dungeon Holiday (Headless Horseman, Ahune, etc.)
 	- Track and display PvP Daily Arena and Weekly Wintergrasp Quest
