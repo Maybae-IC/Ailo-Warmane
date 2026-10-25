@@ -6,6 +6,7 @@ based on the Enhanced version 1.2.2b by [telkar-rg](https://github.com/telkar-rg
 	- Track and display all Raid IDs and Dungeon lockouts
 	- Track and display Raid Weekly Quest (... Must Die!)
 	- Track and display Dungeon Holiday (Headless Horseman, Ahune, etc.)
+	- Track and display the hourly holiday effect (Tricked or Treated)
 	- Track and display PvP Daily Arena and Weekly Wintergrasp Quest
 	- Shows remaining lockout time in days > hours > minutes
 	- Sorts Chars per average iLevel, from high to low geared 
@@ -19,6 +20,12 @@ Lockouts with remaining time and changed Tooltip:<br>
 ![Changed Tooltip and Lockouts](https://github.com/Maybae-IC/Ailo-Warmane/blob/main/_img/changed.png)
 
 ## Changes
+- 1.3.1
+  	- Renamed tooltip headers (Activity, Type, and Info)
+  	- Added Hourly Holiday Event (Tricked or Treated)
+  	- Added cleanup of expired hourly effect timers
+  	- Code cleanup
+
 - 1.3.0 Hotfix
 	- Ignore invalid saved values for Timestamps
 
