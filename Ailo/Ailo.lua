@@ -93,6 +93,7 @@ function Ailo:OnInitialize()
         self:RegisterEvent("UPDATE_INSTANCE_INFO")
         self:RegisterEvent("LFG_COMPLETION_REWARD")
         self:RegisterEvent("LFG_UPDATE_RANDOM_INFO")
+		self:RegisterEvent("UNIT_AURA")
 		self:RegisterEvent("QUEST_COMPLETE")
         self:RegisterEvent("QUEST_FINISHED")
     end
@@ -147,6 +148,7 @@ end
 function Ailo:OnEnable()
 	OpenCalendar()
 	self:ScheduleTimer("CheckSeasonActive", 2) -- wait 3 secs 
+	self:ScheduleTimer("UpdateHourlyEffectForChar", 5) -- sync seasonal aura after login
 	self:ScheduleTimer("CheckCharGear", 5) -- wait 3 secs 
 end
 
@@ -476,9 +478,28 @@ function Ailo:PrepareTooltip(tooltip)
 	wipe(raid_dungeon)
 	wipe(raidorder_used)	-- table clean up
     
+	local now = time()
     local nextPurge = self.db.global.nextPurge
-    if nextPurge > 0 and time() > (nextPurge + 60) then
-        -- Only search 
+    local expiredHourlyEffect = false
+
+    -- Check expired hourly effects independently of the regular purge time.
+    for _, chars in pairs(self.db.global.chars) do
+        for _, instances in pairs(chars) do
+            if type(instances.totdone) == "number"
+                and now > instances.totdone then
+                expiredHourlyEffect = true
+                break
+            end
+        end
+        if expiredHourlyEffect then
+            break
+        end
+    end
+
+    if expiredHourlyEffect then
+        self:CheckDailyHeroicLockouts()
+        self.db.global.nextPurge = self:GetNextPurge()
+    elseif nextPurge > 0 and now > nextPurge then
         self:PurgeOldRaidIDs()
         self:TrimRaidTable()
         self:CheckDailyHeroicLockouts()
@@ -515,16 +536,24 @@ function Ailo:PrepareTooltip(tooltip)
 	end
 
     if next(raidsdb) or self.db.profile.showAllChars or 
-       self.db.profile.showDailyHeroic or self.db.profile.showWeeklyRaid or 
-       self.db.profile.showWGVictory or self.db.profile.showDailyPVP or self.db.profile.showSeasonal then
+		self.db.profile.showDailyHeroic or self.db.profile.showWeeklyRaid or 
+		self.db.profile.showWGVictory or self.db.profile.showDailyPVP or self.db.profile.showSeasonal then
         -- At least one char is saved to some 
-        tooltip:AddHeader(L["Raid"]) -- Raid
-        tooltip:AddHeader(L["Size"]) -- Size
-        tooltip:AddHeader(L["Diff"]) -- Heroic
+        tooltip:AddHeader(L["Activity"]) -- Raid, Dungeon, Daily, ...
+        tooltip:AddHeader(L["Type"]) -- Size, Event, Quest, ...
+        tooltip:AddHeader(L["Info"]) -- Heroic, Non-Heroic, Rewards, ...
 
         local raid, size, difficulties,  difficulty, colcount, numdifficulties, lastcolumn, dailyHeroicColum, weeklyRaidColumn, wgVictoryColumn, dailyPVPColumn
-		local seasonDailyColumn
-        -- Daily Seasonal Instacne Boss column
+		local seasonDailyColumn, seasonHourlyColumn
+        -- Hourly seasonal effect column (only for events defining hourlyEffect)
+        if self.db.profile.showSeasonal and Seasonal.ActiveHoliday
+            and Seasonal.ActiveHoliday.hourlyEffect then
+            seasonHourlyColumn = tooltip:AddColumn("CENTER")
+            tooltip:SetCell(1, seasonHourlyColumn, L["Hourly"])
+            tooltip:SetCell(2, seasonHourlyColumn, L["Event"])
+            tooltip:SetCell(3, seasonHourlyColumn, Seasonal.ActiveHoliday.icon)
+        end
+        -- Daily Seasonal Instance Boss column
         if self.db.profile.showSeasonal and Seasonal.ActiveHoliday ~= nil then
             seasonDailyColumn = tooltip:AddColumn("CENTER")
             tooltip:SetCell(1, seasonDailyColumn, self.db.profile.dailySH)
@@ -605,7 +634,7 @@ function Ailo:PrepareTooltip(tooltip)
 			char_rows = 0
             for _,iteratePlayer in ipairs(sortRealmsPlayer[iterateRealm]) do
                 instances = charsdb[iterateRealm][iteratePlayer]
-                if self.db.profile.showAllChars or (instances.lockouts and next(instances.lockouts)) or instances.dailyheroic or instances.weeklydone or instances.wgvictory or instances.dailypvp or instances.dailyseason then
+                if self.db.profile.showAllChars or (instances.lockouts and next(instances.lockouts)) or instances.dailyheroic or instances.weeklydone or instances.wgvictory or instances.dailypvp or instances.dailyseason or instances.totdone then
 					lastline = tooltip:AddLine("")
 					nameString = iteratePlayer
 					-- if instances.level then
@@ -623,18 +652,18 @@ function Ailo:PrepareTooltip(tooltip)
                         tooltip:SetCell(lastline, i, "") 
                         tooltip:SetCellColor(lastline, i, self.db.profile.freeraid.r, self.db.profile.freeraid.g, self.db.profile.freeraid.b, self.db.profile.freeraid.a)
                     end
-                    if dailyHeroicColum and type(instances.dailyheroic) == "number" then
-						local expire_text = ""
-						local remaining = instances.dailyheroic - tnow
-						if remaining >= 3600 then
-							local h_time = math.floor(remaining / 3600)
-							expire_text = tostring(h_time) .. L["hours"]
-						elseif remaining > 0 then
-							local m_time = math.ceil(remaining / 60)
-							expire_text = tostring(m_time) .. L["minutes"]
-						end									
-						tooltip:SetCell(lastline, dailyHeroicColum, expire_text) -- change
-                        tooltip:SetCellColor(lastline, dailyHeroicColum, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
+                    if seasonHourlyColumn and type(instances.totdone) == "number" then
+                        local expire_text = ""
+                        local remaining = instances.totdone - tnow
+                        if remaining >= 3600 then
+                            local h_time = math.floor(remaining / 3600)
+                            expire_text = tostring(h_time) .. L["hours"]
+                        elseif remaining > 0 then
+                            local m_time = math.ceil(remaining / 60)
+                            expire_text = tostring(m_time) .. L["minutes"]
+                        end
+                        tooltip:SetCell(lastline, seasonHourlyColumn, expire_text)
+                        tooltip:SetCellColor(lastline, seasonHourlyColumn, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
                     end
                     if seasonDailyColumn and type(instances.dailyseason) == "number" then
 						local expire_text = ""
@@ -648,6 +677,19 @@ function Ailo:PrepareTooltip(tooltip)
 						end									
 						tooltip:SetCell(lastline, seasonDailyColumn, expire_text) -- change
                         tooltip:SetCellColor(lastline, seasonDailyColumn, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
+                    end
+                    if dailyHeroicColum and type(instances.dailyheroic) == "number" then
+						local expire_text = ""
+						local remaining = instances.dailyheroic - tnow
+						if remaining >= 3600 then
+							local h_time = math.floor(remaining / 3600)
+							expire_text = tostring(h_time) .. L["hours"]
+						elseif remaining > 0 then
+							local m_time = math.ceil(remaining / 60)
+							expire_text = tostring(m_time) .. L["minutes"]
+						end									
+						tooltip:SetCell(lastline, dailyHeroicColum, expire_text) -- change
+                        tooltip:SetCellColor(lastline, dailyHeroicColum, self.db.profile.savedraid.r, self.db.profile.savedraid.g, self.db.profile.savedraid.b, self.db.profile.savedraid.a)
                     end
                     if weeklyRaidColumn and type(instances.weeklydone) == "number" then
 						local expire_text = ""
@@ -791,6 +833,9 @@ function Ailo:GetNextPurge()
             end
             if type(instances.dailyseason) == "number" and (nextPurge == 0 or nextPurge > instances.dailyseason) then
                 nextPurge = instances.dailyseason
+            end
+            if type(instances.totdone) == "number" and (nextPurge == 0 or nextPurge > instances.totdone) then
+                nextPurge = instances.totdone
             end
             if type(instances.weeklydone) == "number" and (nextPurge == 0 or nextPurge > instances.weeklydone) then
                 nextPurge = instances.weeklydone
@@ -964,6 +1009,9 @@ function Ailo:CheckDailyHeroicLockouts()
             if type(instances.dailyseason) ~= "number" or now > instances.dailyseason then
                 instances.dailyseason = nil
             end
+            if type(instances.totdone) ~= "number" or now > instances.totdone then
+                instances.totdone = nil
+            end
             if type(instances.weeklydone) ~= "number" or now > instances.weeklydone then
                 instances.weeklydone = nil
             end
@@ -1096,6 +1144,58 @@ function Ailo:QUEST_FINISHED(...)
     end
 
     currentWeeklyQuestID = nil
+end
+
+-- Track the configured hourly seasonal effect from the player's harmful auras.
+-- On this WotLK 3.3.5a client, UnitAura returns spellID as its 11th value.
+function Ailo:UNIT_AURA(event, unit)
+    if unit ~= "player" then
+        return
+    end
+    self:UpdateHourlyEffectForChar()
+end
+
+function Ailo:UpdateHourlyEffectForChar()
+    local activeHoliday = Seasonal.ActiveHoliday
+    if not activeHoliday or not activeHoliday.hourlyEffect then
+        return
+    end
+
+    local name, rank, icon, count, dispelType, duration, expirationTime
+    local caster, isStealable, shouldConsolidate, spellID
+
+    for i = 1, 40 do
+        name, rank, icon, count, dispelType, duration, expirationTime,
+            caster, isStealable, shouldConsolidate, spellID =
+            UnitAura("player", i, "HARMFUL")
+
+        if not name then
+            break
+        end
+
+        if spellID == activeHoliday.hourlyEffect and type(expirationTime) == "number" then
+            local remaining = expirationTime - GetTime()
+            if remaining > 0 then
+                if not self.db.global.chars[currentRealm] then
+                    self.db.global.chars[currentRealm] = {}
+                end
+                if not self.db.global.chars[currentRealm][currentChar] then
+                    self.db.global.chars[currentRealm][currentChar] = {}
+                end
+
+                -- Convert GetTime()-relative expiry into a persistent Unix timestamp.
+				local expireTime = time() + remaining
+				self.db.global.chars[currentRealm][currentChar].totdone = expireTime
+
+				local nextPurge = self.db.global.nextPurge
+				if nextPurge <= 100 or expireTime < nextPurge then
+					self.db.global.nextPurge = expireTime
+				end
+            end
+            return
+        end
+    end
+    -- Keep any saved expiry if the aura is absent; unrelated aura changes must not erase it.
 end
 
 function Ailo:CheckSeasonActive()

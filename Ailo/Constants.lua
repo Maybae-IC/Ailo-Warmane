@@ -27,11 +27,9 @@ TC.Seasonal.Events = {
 	HallowsEnd = { 
 		icon = "|TInterface\\Icons\\Inv_misc_food_59:20|t", 
 		texture_name = "Calendar_HallowsEnd",
-		dungeon_id = 285
-	},
-    -- WinterVeil = { icon = "|TInterface\\Icons\\inv_holiday_christmas_present_01:20|t",
-					-- texture_name = "Calendar_WinterVeil",
-					-- quest_ids = { 6983, 7043 }, },
+		dungeon_id = 285,
+		hourlyEffect = 24755
+	}
 }
 
 TC.RaidOrderLfgId = {
