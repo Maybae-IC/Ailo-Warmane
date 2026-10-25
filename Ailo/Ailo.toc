@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Author: Starfox
-## Title: Ailo |cff00bbffWarmane|r (|cff33ff991.3.0|r) based on |cff33ff99Enhanced|r (1.2.2b)
+## Title: Ailo |cff00bbffWarmane|r (|cff33ff991.3.1|r) based on |cff33ff99Enhanced|r (1.2.2b)
 ## Notes: Am I locked out?|nDisplays all RaidIDs, Holiday Season Dungeon, Daily HC/PVP, Weekly Raid/Wintergrasp for all chars
 ## SavedVariables: AiloDB
 ## OptionalDeps: Ace3, LibDBIcon-1.0, LibQTip-1.0, !ClassColors
